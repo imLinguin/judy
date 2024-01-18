@@ -1,0 +1,39 @@
+import { ListView, Spinner } from "std-widgets.slint";
+
+export component GameList {
+    in property <bool> loading;
+    in property <[string]> games;
+    in-out property <int> selected: -1;
+
+    states [
+        loading when self.loading: {
+            loader.visible: true;
+        }
+        ready when !self.loading: {
+            loader.visible: false;
+        }
+    ]
+
+    view := ListView {
+        for game[index] in games: Rectangle {
+            background: index == selected ? blue : transparent;
+            Text {
+                text: game;
+            }
+            area := TouchArea {
+                clicked => {
+                    selected = index;
+                }
+            }
+        }
+    }
+
+    loader := Rectangle {
+        VerticalLayout {
+            alignment: center;
+            Spinner {
+                indeterminate: true;
+            }
+        }
+    }
+}

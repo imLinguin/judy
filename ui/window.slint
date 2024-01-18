@@ -1,8 +1,26 @@
+import { Button } from "std-widgets.slint";
+import { GameList } from "game-list.slint";
+
+
 export component MainWindow inherits Window {
-    width: 1000px;
-    height: 500px;
+    preferred-width: 1000px;
+    preferred-height: 500px;
     title: "Judy";
-    Text {
-        text: "Hello World";
+
+    in property <bool> games_loading: true;
+    in property <[string]> games: [];
+    HorizontalLayout {
+        gamelist := GameList {
+            width: 30%;
+            loading: games_loading;
+            games: games;
+        }
+        VerticalLayout {
+            alignment: center;
+            Text {
+                horizontal-alignment: center;
+                text: "Select game to continue";
+            }
+        }
     }
 }
